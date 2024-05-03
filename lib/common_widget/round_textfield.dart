@@ -9,7 +9,7 @@ class RoundTextField extends StatelessWidget {
   final TextAlign titleAlign;
   final bool obscureText;
   final String? errorText;
-  final String? iconPath;
+  final Icon? icon;
 
   const RoundTextField({
     super.key,
@@ -19,7 +19,7 @@ class RoundTextField extends StatelessWidget {
     this.keyboardType,
     this.obscureText = false,
     this.errorText,
-    this.iconPath,
+    this.icon,
   });
 
   @override
@@ -56,20 +56,13 @@ class RoundTextField extends StatelessWidget {
               enabledBorder: InputBorder.none,
               contentPadding: const EdgeInsets.symmetric(vertical: 17),
               errorText: errorText,
-              prefixIcon: iconPath != null
-                  ? Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Image.asset(
-                        iconPath!,
-                        color: TColor.white,
-                      ),
-                    )
-                  : null,
-              hintStyle: const TextStyle(color: Colors.red, fontSize: 12),
+              prefixIcon: icon,
+              prefixIconColor: TColor.white,
+              hintStyle: TextStyle(color: TColor.red, fontSize: 12),
             ),
             keyboardType: keyboardType,
             obscureText: obscureText,
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(color: TColor.white),
           ),
         ),
       ],

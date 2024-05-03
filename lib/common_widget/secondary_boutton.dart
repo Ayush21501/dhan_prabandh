@@ -16,21 +16,37 @@ class SecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: Container(
-        height: 50,
-        decoration: BoxDecoration(
-          image: const DecorationImage(
-            image: AssetImage("assets/img/secodry_btn.png"),
+    return Container(
+      width: double.infinity, // Ensure full width
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent, // Transparent background
+          shadowColor: Colors.transparent, // No shadow
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
           ),
-          borderRadius: BorderRadius.circular(30),
         ),
-        alignment: Alignment.center,
-        child: Text(
-          title,
-          style: TextStyle(
-              color: TColor.white, fontSize: fontSize, fontWeight: fontWeight),
+        child: Ink(
+          decoration: BoxDecoration(
+            image: const DecorationImage(
+              image: AssetImage("assets/img/secodry_btn.png"),
+              fit: BoxFit.cover, // Cover the button area
+            ),
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Container(
+            height: 50,
+            alignment: Alignment.center,
+            child: Text(
+              title,
+              style: TextStyle(
+                color: TColor.white,
+                fontSize: fontSize,
+                fontWeight: fontWeight,
+              ),
+            ),
+          ),
         ),
       ),
     );

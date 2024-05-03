@@ -6,6 +6,7 @@ import 'package:dhan_prabandh/db/database_helper.dart';
 
 import 'package:dhan_prabandh/db/model/sign_up_model.dart';
 import 'package:dhan_prabandh/screens/login/sign_in_view.dart';
+import 'package:dhan_prabandh/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignUpView extends StatefulWidget {
@@ -64,6 +65,13 @@ class _SignUpViewState extends State<SignUpView> {
       int id = await dbHelper.insertSignUp(signUpData);
       print('Sign-up data inserted with id: $id');
       printAllSignUpData();
+      Navigator.pushReplacement(
+        // ignore: use_build_context_synchronously
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SplashScreen(),
+        ),
+      );
     }
   }
 
@@ -127,7 +135,7 @@ class _SignUpViewState extends State<SignUpView> {
                 title: "Name",
                 controller: txtName,
                 keyboardType: TextInputType.text,
-                iconPath: 'assets/img/name_text.png',
+                icon: const Icon(Icons.account_circle_outlined),
               ),
               const SizedBox(
                 height: 15,
@@ -136,7 +144,7 @@ class _SignUpViewState extends State<SignUpView> {
                 title: "Surname",
                 controller: txtSurname,
                 keyboardType: TextInputType.text,
-                iconPath: 'assets/img/name_text.png',
+                icon: const Icon(Icons.account_circle_outlined),
               ),
               const SizedBox(
                 height: 15,
@@ -145,7 +153,7 @@ class _SignUpViewState extends State<SignUpView> {
                 title: "Password",
                 controller: txtPassword,
                 obscureText: true,
-                iconPath: 'assets/img/password_text.png',
+                icon: const Icon(Icons.lock_outline),
                 //  errorText: _passwordError
                 //     ? 'This password is already taken. Please choose another one.'
                 //     : null,

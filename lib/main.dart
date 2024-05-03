@@ -1,11 +1,6 @@
-import 'dart:io';
-
 import 'package:dhan_prabandh/common/color_extension.dart';
-import 'package:flutter/material.dart';
 import 'package:dhan_prabandh/screens/splash_screen.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:flutter/material.dart';
 
 void main() async {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -15,11 +10,11 @@ void main() async {
   // );
   // FlutterNativeSplash.remove();
 
-  if (Platform.isWindows || Platform.isLinux) {
-    // Initialize FFI
-    sqfliteFfiInit();
-  }
-  databaseFactory = databaseFactoryFfi;
+  // if (Platform.isWindows || Platform.isLinux) {
+  //   // Initialize FFI
+  //   sqfliteFfiInit();
+  // }
+  // databaseFactory = databaseFactoryFfi;
 
   runApp(const MyApp());
 }

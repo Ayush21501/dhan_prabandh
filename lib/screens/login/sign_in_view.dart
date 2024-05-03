@@ -6,7 +6,6 @@ import 'package:dhan_prabandh/db/database_helper.dart';
 import 'package:dhan_prabandh/db/model/sign_up_model.dart';
 import 'package:dhan_prabandh/screens/home_screen.dart';
 import 'package:dhan_prabandh/screens/login/sign_up_view.dart';
-import 'package:dhan_prabandh/screens/login/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignInView extends StatefulWidget {
@@ -23,23 +22,27 @@ class _SignInViewState extends State<SignInView> {
   String? errorMessage;
 
   void handleSignIn() async {
-    String password = txtPassword.text;
-    SignUp? user = await dbHelper.findUserByPassword(password);
+    try {
+      String password = txtPassword.text;
+      SignUp? user = await dbHelper.findUserByPassword(password);
+      if (user != null) {
+        // Navigate to WelcomePage or another page that takes a user object
 
-    if (user != null) {
-      // Navigate to WelcomePage or another page that takes a user object
-
-      print(user.name + " " + user.surname);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomeScreen(user: user),
-        ),
-      );
-    } else {
-      setState(() {
-        errorMessage = 'Please enter a valid password';
-      });
+        print(user.name + " " + user.surname);
+        Navigator.pushReplacement(
+          // ignore: use_build_context_synchronously
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(user: user),
+          ),
+        );
+      } else {
+        setState(() {
+          errorMessage = 'Please enter a valid password';
+        });
+      }
+    } catch (e) {
+      print(" errror is $e");
     }
   }
 
@@ -70,7 +73,7 @@ class _SignInViewState extends State<SignInView> {
                 title: "Password",
                 controller: txtPassword,
                 obscureText: true,
-                iconPath: 'assets/img/password_text.png',
+                icon: const Icon(Icons.lock_outline),
               ),
               if (errorMessage != null)
                 Padding(
@@ -80,7 +83,7 @@ class _SignInViewState extends State<SignInView> {
                       style: TextStyle(color: TColor.red, fontSize: 14),
                     )),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               PrimaryButton(
                 title: "Sign In",

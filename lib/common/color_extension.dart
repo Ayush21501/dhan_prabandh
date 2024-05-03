@@ -34,4 +34,5 @@ class TColor {
   static Color get secondaryText => gray60;
 
   static Color get white => Colors.white;
+  // static Color get red => const Color(0xffFF3131);
 }
