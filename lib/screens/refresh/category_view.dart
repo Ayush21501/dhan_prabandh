@@ -1,10 +1,12 @@
 import 'package:dhan_prabandh/common/varible_extension.dart';
+import 'package:dhan_prabandh/db/model/sign_up_model.dart';
 import 'package:dhan_prabandh/screens/refresh/income_expense_setting_view.dart';
 import 'package:flutter/material.dart';
 import 'package:dhan_prabandh/common/color_extension.dart';
 
 class CategoryView extends StatefulWidget {
-  const CategoryView({super.key});
+  final SignUp user;
+  const CategoryView({super.key, required this.user});
 
   @override
   State<CategoryView> createState() => _CategoryViewState();
@@ -37,14 +39,15 @@ class _CategoryViewState extends State<CategoryView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 12),
+                const SizedBox(height: 0),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => IncomeExpenseSettingView(
-                          title: Category.type["Income"]!,
+                          title: CategoryType.INCOME,
+                          user: widget.user
                         ),
                       ),
                     );
@@ -78,14 +81,15 @@ class _CategoryViewState extends State<CategoryView> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => IncomeExpenseSettingView(
-                          title: Category.type["Expense"]!,
+                          title: CategoryType.EXPENSE,
+                           user: widget.user
                         ),
                       ),
                     );

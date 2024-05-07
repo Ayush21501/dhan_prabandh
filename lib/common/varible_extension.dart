@@ -1,3 +1,4 @@
-class Category {
-  static var type = {"Income": "income", "Expense": "expense"};
+class CategoryType {
+  static const INCOME =  "income";
+  static const EXPENSE = "expense"; 
 }

@@ -1,11 +1,13 @@
 import 'package:dhan_prabandh/common/color_extension.dart';
+import 'package:dhan_prabandh/db/model/sign_up_model.dart';
 import 'package:dhan_prabandh/screens/refresh/accounts_view_refresh.dart';
 import 'package:dhan_prabandh/screens/refresh/backup_view.dart';
 import 'package:dhan_prabandh/screens/refresh/category_view.dart';
 import 'package:flutter/material.dart';
 
 class RefreshView extends StatefulWidget {
-  const RefreshView({super.key});
+  final SignUp user; 
+  const RefreshView({super.key, required this.user});
 
   @override
   State<RefreshView> createState() => _RefreshViewState();
@@ -45,7 +47,7 @@ class _RefreshViewState extends State<RefreshView> {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 500),
+                        transitionDuration: const Duration(milliseconds: 200),
                         transitionsBuilder: (BuildContext context,
                             Animation<double> animation,
                             Animation<double> secondaryAnimation,
@@ -61,7 +63,7 @@ class _RefreshViewState extends State<RefreshView> {
                         pageBuilder: (BuildContext context,
                             Animation<double> animation,
                             Animation<double> secondaryAnimation) {
-                          return const CategoryView();
+                          return CategoryView(user: widget.user);
                         },
                       ),
                     );
@@ -85,7 +87,7 @@ class _RefreshViewState extends State<RefreshView> {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 500),
+                        transitionDuration: const Duration(milliseconds: 200),
                         transitionsBuilder: (BuildContext context,
                             Animation<double> animation,
                             Animation<double> secondaryAnimation,
@@ -125,7 +127,7 @@ class _RefreshViewState extends State<RefreshView> {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 500),
+                        transitionDuration: const Duration(milliseconds: 200),
                         transitionsBuilder: (BuildContext context,
                             Animation<double> animation,
                             Animation<double> secondaryAnimation,

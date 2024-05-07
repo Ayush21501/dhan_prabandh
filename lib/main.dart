@@ -1,6 +1,13 @@
 import 'package:dhan_prabandh/common/color_extension.dart';
+import 'package:dhan_prabandh/db/database_helper.dart';
 import 'package:dhan_prabandh/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
+// import 'package:sqflite/sqflite.dart';
+
+// for windows and linux plateform run
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'dart:io' show Platform;
+// import 'package:flutter/foundation.dart' 
 
 void main() async {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -10,11 +17,17 @@ void main() async {
   // );
   // FlutterNativeSplash.remove();
 
-  // if (Platform.isWindows || Platform.isLinux) {
-  //   // Initialize FFI
-  //   sqfliteFfiInit();
-  // }
-  // databaseFactory = databaseFactoryFfi;
+ // Check if the platform is Windows or Linux
+  if (Platform.isWindows || Platform.isLinux) {
+    // Initialize FFI
+    sqfliteFfiInit();
+   databaseFactory = databaseFactoryFfi;
+  }
+
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize the database
+  await DatabaseHelper().initDB();
 
   runApp(const MyApp());
 }
@@ -25,6 +38,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Trackerized',
       theme: ThemeData(
         fontFamily: "Inter",

@@ -25,6 +25,8 @@ class _SignInViewState extends State<SignInView> {
     try {
       String password = txtPassword.text;
       SignUp? user = await dbHelper.findUserByPassword(password);
+
+      // database 
       if (user != null) {
         // Navigate to WelcomePage or another page that takes a user object
 
@@ -38,7 +40,7 @@ class _SignInViewState extends State<SignInView> {
         );
       } else {
         setState(() {
-          errorMessage = 'Please enter a valid password';
+          errorMessage = 'Please enter a valid password!';
         });
       }
     } catch (e) {

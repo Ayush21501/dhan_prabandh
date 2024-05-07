@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               onPressed: () {
                                 setState(() {
                                   selectTab = 3;
-                                  currentTabView = const RefreshView();
+                                  currentTabView =  RefreshView(user:widget.user) ;
                                 });
                               },
                               icon: Image.asset(

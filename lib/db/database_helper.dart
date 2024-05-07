@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dhan_prabandh/db/model/category_model.dart';
 import 'package:dhan_prabandh/db/model/sign_up_model.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
@@ -23,10 +24,10 @@ class DatabaseHelper {
   }
 
   Future<Database> initDB() async {
-    String path = join(await getDatabasesPath(), 'signup.db');
-    _db = await openDatabase(path, version: 1, onCreate: _createDB);
-    return _db!;
-  }
+  String path = join(await getDatabasesPath(), 'dp.db');
+  _db = await openDatabase(path, version: 2, onCreate: _createDB, onUpgrade: _onUpgrade);
+  return _db!;
+}
 
   void _createDB(Database db, int version) async {
     await db.execute('''
@@ -34,10 +35,39 @@ class DatabaseHelper {
         id INTEGER PRIMARY KEY,
         name TEXT,
         surname TEXT,
-        password TEXT
+        password TEXT,
+        isDeleted INTEGER DEFAULT 0,
       )
       ''');
+
+      await db.execute('''
+      CREATE TABLE categories (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        type TEXT CHECK(type IN ('income', 'expense')), 
+        parentId INTEGER,
+        userId INTEGER,
+        FOREIGN KEY (parentId) REFERENCES categories (id) ON DELETE CASCADE,
+        FOREIGN KEY (userId) REFERENCES SignUp (id) ON DELETE CASCADE
+      )
+    ''');
   }
+
+  void _onUpgrade(Database db, int oldVersion, int newVersion) async {
+  if (oldVersion < 2) {
+    // await db.execute('''
+    //   CREATE TABLE categories (
+    //     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    //     name TEXT,
+    //     type TEXT CHECK(type IN ('income', 'expense')), 
+    //     parentId INTEGER,
+    //     userId INTEGER,
+    //     FOREIGN KEY (parentId) REFERENCES categories (id) ON DELETE CASCADE,
+    //     FOREIGN KEY (userId) REFERENCES SignUp (id) ON DELETE CASCADE
+    //   )
+    // ''');
+  }
+}
 
   Future<int> insertSignUp(SignUp signUp) async {
     Database dbClient = await db;
@@ -67,6 +97,7 @@ class DatabaseHelper {
     });
   }
 
+  // login 
   Future<SignUp?> findUserByPassword(String password) async {
     final Database dbClient = await db;
     List<Map<String, dynamic>> result = await dbClient.query(
@@ -75,7 +106,6 @@ class DatabaseHelper {
       whereArgs: [password],
       limit: 1,
     );
-
     if (result.isNotEmpty) {
       return SignUp(
         id: result[0]['id'],
@@ -87,4 +117,40 @@ class DatabaseHelper {
       return null;
     }
   }
+
+  Future<int> insertCategory(Category category) async {
+    Database dbClient = await db;
+    return await dbClient.insert('categories', category.toMap());
+  }
+
+
+    Future<List<Category>> getCategoriesByType(String type, int userId) async {
+  Database dbClient = await db;
+  final List<Map<String, dynamic>> maps = await dbClient.query(
+    'categories',
+    where: 'type = ? AND userId = ?',
+    whereArgs: [type, userId],
+  );
+  print('Retrieved data: $maps');
+  return List.generate(maps.length, (i) {
+    return Category(
+      id: maps[i]['id'],
+      name: maps[i]['name'],
+      type: maps[i]['type'],
+      parentId: maps[i]['parentId'],
+      userId: maps[i]['userId'],
+    );
+  });
+}
+
+ Future<void> deleteCategory(int id) async {
+    Database dbClient = await db; // Assuming 'db' is your Database instance getter
+    await dbClient.delete(
+      'categories',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+
 }
