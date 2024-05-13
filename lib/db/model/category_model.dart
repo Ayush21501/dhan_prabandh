@@ -1,9 +1,11 @@
 class Category {
   int? id;
   String name;
-  String type; 
+  String type;
   int? parentId;
   int? userId;
+  bool deleted; // New property to handle soft deletion
+  bool isDefault; // New property to indicate default category
 
   Category({
     this.id,
@@ -11,6 +13,8 @@ class Category {
     required this.type,
     this.parentId,
     this.userId,
+    this.deleted = false, // Default to false indicating not deleted
+    this.isDefault = false, // Default to false indicating not default
   });
 
   Map<String, dynamic> toMap() {
@@ -20,6 +24,8 @@ class Category {
       'type': type,
       'parentId': parentId,
       'userId': userId,
+      'deleted': deleted ? 1 : 0, // Store as integer in the database
+      'isDefault': isDefault ? 1 : 0, // Store as integer in the database
     };
   }
 
@@ -30,6 +36,8 @@ class Category {
       type: map['type'],
       parentId: map['parentId'],
       userId: map['userId'],
+      deleted: map['deleted'] == 1, // Convert integer back to boolean
+      isDefault: map['isDefault'] == 1, // Convert integer back to boolean
     );
   }
 }

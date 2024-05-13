@@ -6,7 +6,7 @@ import 'package:dhan_prabandh/screens/refresh/category_view.dart';
 import 'package:flutter/material.dart';
 
 class RefreshView extends StatefulWidget {
-  final SignUp user; 
+  final SignUp user;
   const RefreshView({super.key, required this.user});
 
   @override
@@ -27,11 +27,11 @@ class _RefreshViewState extends State<RefreshView> {
           "Settings",
           style: TextStyle(color: TColor.white, fontSize: 18),
         ),
-        leading: IconButton(
-          padding: const EdgeInsets.only(left: 20.0),
-          icon: Icon(Icons.arrow_back_ios, color: TColor.white),
-          onPressed: () => Navigator.pop(context),
-        ),
+        // leading: IconButton(
+        //   padding: const EdgeInsets.only(left: 20.0),
+        //   icon: Icon(Icons.arrow_back_ios, color: TColor.white),
+        //   onPressed: () => Navigator.pop(context),
+        // ),
       ),
       backgroundColor: TColor.gray,
       body: SingleChildScrollView(
@@ -103,14 +103,14 @@ class _RefreshViewState extends State<RefreshView> {
                         pageBuilder: (BuildContext context,
                             Animation<double> animation,
                             Animation<double> secondaryAnimation) {
-                          return const AccountViewRefresh();
+                          return AccountViewRefresh(user: widget.user);
                         },
                       ),
                     );
                   },
                   child: Column(
                     children: [
-                      Icon(Icons.account_circle_outlined, color: TColor.white),
+                      Icon(Icons.account_balance_outlined, color: TColor.white),
                       const SizedBox(height: 8),
                       Text(
                         'Accounts',

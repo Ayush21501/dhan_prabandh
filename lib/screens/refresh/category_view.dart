@@ -17,115 +17,112 @@ class _CategoryViewState extends State<CategoryView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: TColor.gray,
-          elevation: 0,
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: Text(
-            "Categories",
-            style: TextStyle(color: TColor.white, fontSize: 18),
-          ),
-          leading: IconButton(
-            padding: const EdgeInsets.only(left: 20.0),
-            icon: Icon(Icons.arrow_back_ios, color: TColor.white),
-            onPressed: () => Navigator.pop(context),
+      appBar: AppBar(
+        backgroundColor: TColor.gray,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Text(
+          "Categories",
+          style: TextStyle(color: TColor.white, fontSize: 18),
+        ),
+        leading: IconButton(
+          padding: const EdgeInsets.only(left: 20.0),
+          icon: Icon(Icons.arrow_back_ios, color: TColor.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      backgroundColor: TColor.gray,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 0),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => IncomeExpenseSettingView(
+                          title: CategoryType.INCOME, user: widget.user),
+                    ),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: TColor.border.withOpacity(0.1),
+                    ),
+                    color: TColor.gray60.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    child: Row(
+                      children: [
+                        Icon(Icons.account_balance_wallet_outlined,
+                            color: TColor.green),
+                        const SizedBox(width: 15),
+                        Text(
+                          "Income Category Setting",
+                          style: TextStyle(
+                              color: TColor.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => IncomeExpenseSettingView(
+                          title: CategoryType.EXPENSE, user: widget.user),
+                    ),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: TColor.border.withOpacity(0.1),
+                    ),
+                    color: TColor.gray60.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    child: Row(
+                      children: [
+                        Icon(Icons.account_balance_wallet_outlined,
+                            color: TColor.red),
+                        const SizedBox(width: 15),
+                        Text(
+                          "Expense Category Setting",
+                          style: TextStyle(
+                              color: TColor.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-        backgroundColor: TColor.gray,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 0),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => IncomeExpenseSettingView(
-                          title: CategoryType.INCOME,
-                          user: widget.user
-                        ),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: TColor.border.withOpacity(0.1),
-                      ),
-                      color: TColor.gray60.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 8),
-                      child: Row(
-                        children: [
-                          Icon(Icons.account_balance_wallet_outlined,
-                              color: TColor.green),
-                          const SizedBox(width: 15),
-                          Text(
-                            "Income Category Setting",
-                            style: TextStyle(
-                                color: TColor.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => IncomeExpenseSettingView(
-                          title: CategoryType.EXPENSE,
-                           user: widget.user
-                        ),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: TColor.border.withOpacity(0.1),
-                      ),
-                      color: TColor.gray60.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 8),
-                      child: Row(
-                        children: [
-                          Icon(Icons.account_balance_wallet_outlined,
-                              color: TColor.red),
-                          const SizedBox(width: 15),
-                          Text(
-                            "Expense Category Setting",
-                            style: TextStyle(
-                                color: TColor.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ));
+      ),
+    );
   }
 }

@@ -297,10 +297,9 @@ class _TransactionViewState extends State<TransactionView> {
                   ),
                   Expanded(
                     child: SegmentButton(
-                      title: "Transaction",
-                      isActive: selectedTab == "Transaction",
-                      onPressed: () =>
-                          setState(() => selectedTab = "Transaction"),
+                      title: "Transfer",
+                      isActive: selectedTab == "Transfer",
+                      onPressed: () => setState(() => selectedTab = "Transfer"),
                     ),
                   )
                 ],
@@ -308,7 +307,7 @@ class _TransactionViewState extends State<TransactionView> {
             ),
             if (selectedTab == "Income") _buildIncomeView(),
             if (selectedTab == "Expense") _buildExpenseView(),
-            if (selectedTab == "Transaction") _buildTransactionView(),
+            if (selectedTab == "Transfer") _buildTransactionView(),
             const SizedBox(
               height: 110,
             ),

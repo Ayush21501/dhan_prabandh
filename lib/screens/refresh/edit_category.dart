@@ -6,50 +6,71 @@ import 'package:dhan_prabandh/db/model/category_model.dart';
 import 'package:dhan_prabandh/db/model/sign_up_model.dart';
 import 'package:flutter/material.dart';
 
-class AddCategory extends StatefulWidget {
-  final String title;
+class EditCategory extends StatefulWidget {
+  final Category category;
   final SignUp user;
-  // const AddCategory({super.key, required this.title});
-  const AddCategory({super.key, required this.title, required this.user});
+  const EditCategory({super.key, required this.user, required this.category});
 
   @override
-  State<AddCategory> createState() => _AddCategoryState();
+  State<EditCategory> createState() => _EditCategoryState();
 }
 
-class _AddCategoryState extends State<AddCategory> {
-// final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+class _EditCategoryState extends State<EditCategory> {
   TextEditingController categoryName = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the TextEditingController with the initial value
+    categoryName = TextEditingController(text: widget.category.name);
+  }
+
+  @override
+  void dispose() {
+    // Dispose the TextEditingController to avoid memory leaks
+    categoryName.dispose();
+    super.dispose();
+  }
 
   void hadleSubmit() async {
     try {
       String categoryTitle = categoryName.text;
-      String categoryType =
-          widget.title; // Assuming title is 'income' or 'expense'
+      String categoryType = widget.category.type;
       int? userId = widget.user.id;
+      int? parentCategoryId = widget.category.parentId;
+      int? categoryId = widget.category.id;
 
       Category category = Category(
         name: categoryTitle,
         type: categoryType,
+        parentId: parentCategoryId,
         userId: userId,
+        id: categoryId,
       );
-      print("Category Name: $categoryTitle");
-      print("Category Type: $categoryType");
-      print("User ID: $userId");
-      int categoryId = await DatabaseHelper().insertCategory(category);
-      print("Category added with ID: $categoryId");
 
-      categoryName.clear();
+      print(categoryTitle);
+      print(categoryType);
+      print(userId);
+      print(parentCategoryId);
+      print(categoryId);
+
+      await DatabaseHelper().updateCategory(category);
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: TColor.green,
-          content: Text("Category added successfully!",
+          content: Text(" Sub Category Updated successfully!",
               style: TextStyle(color: TColor.gray80)),
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
     } catch (e) {
-      print(e);
+      SnackBar(
+        backgroundColor: TColor.red,
+        content:
+            Text("Something is wrong!", style: TextStyle(color: TColor.gray80)),
+        duration: const Duration(seconds: 2),
+      );
     }
   }
 
@@ -62,7 +83,7 @@ class _AddCategoryState extends State<AddCategory> {
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: Text(
-          "Add Category",
+          "Edit Category",
           style: TextStyle(color: TColor.white, fontSize: 18),
         ),
         leading: IconButton(
@@ -86,7 +107,7 @@ class _AddCategoryState extends State<AddCategory> {
                 icon: Icon(Icons.category_outlined, color: TColor.white),
               ),
               SizedBox(height: 30),
-              PrimaryButton(title: "Add Category", onPressed: hadleSubmit)
+              PrimaryButton(title: "Edit Category", onPressed: hadleSubmit)
             ],
           ),
         ),
